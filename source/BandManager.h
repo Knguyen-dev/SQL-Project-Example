@@ -5,7 +5,11 @@
 #include "../source/DBConn.h";
 #include "../source/Band.h";
 
+/*
++ BandManager: Class that encapsulates and handles operations with the 'bands' table, or table
+	that has objects that represents bands.
 
+*/
 
 class BandManager {
 private:
@@ -43,7 +47,6 @@ public:
 	}
 
 	// Other methods for updating and deleting bands
-
 };
 
 

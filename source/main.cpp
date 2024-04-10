@@ -7,21 +7,29 @@
 
 int main() {
     try {
+        // Connect to SQL Server instance on computer
         SQLServerConn connector;
-        std::string connectionString = "DRIVER={SQL Server};SERVER=KN\\SQLEXPRESS;Trusted_Connection=yes;";
-        
+        std::string connectionString = "DRIVER={SQL Server};SERVER=KN2\\SQLEXPRESS;Trusted_Connection=yes;";
         connector.connect(connectionString);
-        std::cout << "Connection to SQL Server successful." << std::endl;
-
-        // At this point sql server has connected so create a DBConn instance 
-        DBConn dbConn (connector.getHDBC());
-
-        BandManager bandManager(dbConn, "bands");
         
+        // At this point sql server has connected so create a DBConn instance and select a database to do operations on
+        DBConn dbConn (connector.getHDBC());
         std::string dbName = "record_company";
         dbConn.useDatabase(dbName);
 
-        Band band = bandManager.createBand("Ace Dreamers!");
+        /*
+        - Create managers for each table you want. Ensure you do init table to 
+            create a table for that database.
+
+        - NOTE: If you don't have a bands table, then you do initTable().
+        */
+        
+        BandManager bandManager(dbConn, "bands");
+        // bandManager.initTable();
+
+        std::string bandName = "Flash";
+        
+        Band band = bandManager.createBand(bandName);
         std::cout << band << std::endl;
         connector.disconnect();
     } catch (const std::exception& ex) {
